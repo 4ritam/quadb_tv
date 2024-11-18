@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:quadb_tv/core/utils/routes.dart';
-import 'package:quadb_tv/core/utils/theme.dart';
 
-void main() {
+import 'core/utils/routes.dart';
+import 'core/utils/theme.dart';
+import 'domain/entities/show.dart';
+import 'injection_container.dart';
+import 'presentation/screens/details_screen.dart';
+import 'presentation/screens/home_screen.dart';
+import 'presentation/screens/search_screen.dart';
+import 'presentation/screens/splash_screen.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await DependencyInjection.init();
+
   runApp(const MyApp());
 }
 
@@ -21,10 +32,18 @@ class MyApp extends StatelessWidget {
         title: 'QuadB TV',
         theme: AppTheme.theme,
         routes: {
-          AppRoutes.splash: (context) => const SizedBox(),
-          AppRoutes.home: (context) => const SizedBox(),
-          AppRoutes.search: (context) => const SizedBox(),
-          AppRoutes.details: (context) => const SizedBox(),
+          AppRoutes.splash: (context) => const SplashScreen(),
+          AppRoutes.home: (context) => const HomeScreen(),
+          AppRoutes.search: (context) => const SearchScreen(),
+        },
+        onGenerateRoute: (settings) {
+          if (settings.name == AppRoutes.details) {
+            final show = settings.arguments as Show;
+            return MaterialPageRoute(
+              builder: (context) => DetailsScreen(show: show),
+            );
+          }
+          return null;
         },
       ),
     );

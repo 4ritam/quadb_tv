@@ -5,17 +5,23 @@ import '../../core/utils/usecase.dart';
 import '../entities/episode.dart';
 import '../irepositories/show_repository.dart';
 
-class GetShowEpisodes implements UseCase<List<Episode>, int> {
+class ShowEpisodesParams {
+  final int showId;
+  final bool includeSpecials;
+
+  ShowEpisodesParams({required this.showId, this.includeSpecials = false});
+}
+
+class GetShowEpisodes implements UseCase<List<Episode>, ShowEpisodesParams> {
   final ShowRepository repository;
 
   GetShowEpisodes(this.repository);
 
   @override
-  Future<Either<Failure, List<Episode>>> call(
-    int showId, {
-    bool includeSpecials = false,
-  }) async {
-    return await repository.getShowEpisodes(showId,
-        includeSpecials: includeSpecials);
+  Future<Either<Failure, List<Episode>>> call(ShowEpisodesParams params) async {
+    return await repository.getShowEpisodes(
+      params.showId,
+      includeSpecials: params.includeSpecials,
+    );
   }
 }

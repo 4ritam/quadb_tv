@@ -38,4 +38,8 @@ class Sizes {
 
   // Screen padding
   static double get screenPadding => 16.w;
+
+  // Border radius
+  static double get defaultRadius => 8.r;
+  static double get cardRadius => 16.r;
 }
