@@ -8,10 +8,10 @@ sealed class SearchEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class PerformSearch extends SearchEvent {
+class PerformNameSearch extends SearchEvent {
   final String query;
 
-  const PerformSearch(this.query);
+  const PerformNameSearch(this.query);
 
   @override
   List<Object> get props => [query];

@@ -1,38 +1,39 @@
+import 'package:quadb_tv/core/helper/html_parser.dart';
+
 import '../../domain/entities/episode.dart';
 
 class EpisodeModel extends Episode {
   const EpisodeModel({
     required super.id,
     required super.name,
-    super.season,
     super.episode,
     super.summary,
     super.imageUrl,
-    super.rating,
-    super.airdate,
+    super.runtime,
   });
 
   factory EpisodeModel.fromJson(Map<String, dynamic> json) {
+    int minutes =
+        json['runtime'] is double ? json['runtime'].toInt() : json['runtime'];
+    int hours = minutes ~/ 60;
+    if (hours > 0) {
+      minutes %= 60;
+    }
     return EpisodeModel(
-      id: json['id'],
-      name: json['name'],
-      season: json['season'],
-      episode: json['number'],
-      summary: json['summary'],
-      imageUrl: json['image']?['medium'],
-      rating: json['rating']['average']?.toDouble(),
-      airdate: json['airdate'],
-    );
+        id: json['id'],
+        name: json['name'],
+        episode: json['number'],
+        summary: htmlParse(json['summary'])?.trim(),
+        imageUrl: json['image']?['medium'] ?? json['image']?['original'],
+        runtime: '${hours}h ${minutes}m');
   }
 
   Map<String, dynamic> toJson() => {
         'id': id,
         'name': name,
-        'season': season,
         'number': episode,
         'summary': summary,
         'image': {'medium': imageUrl},
-        'rating': {'average': rating},
-        'airdate': airdate,
+        'runtime': runtime,
       };
 }

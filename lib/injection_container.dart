@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
+import 'package:quadb_tv/presentation/bloc/bloc/episode_bloc.dart';
 
 import 'core/network/network_info.dart';
 import 'data/datasources/show_remote_datasource.dart';
@@ -57,10 +58,14 @@ class DependencyInjection {
     sl.registerFactory(() => SearchBloc(searchShows: sl<SearchShows>()));
     sl.registerFactory(
       () => DetailsBloc(
-        getShowEpisodes: sl<GetShowEpisodes>(),
         getShowSeasons: sl<GetShowSeasons>(),
-        getSeasonEpisodes: sl<GetSeasonEpisodes>(),
         getShowCast: sl<GetShowCast>(),
+      ),
+    );
+    sl.registerFactory(
+      () => EpisodeBloc(
+        getShowEpisodes: sl<GetShowEpisodes>(),
+        getSeasonEpisodes: sl<GetSeasonEpisodes>(),
       ),
     );
   }

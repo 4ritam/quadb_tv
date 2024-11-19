@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) => MaterialApp(
         title: 'QuadB TV',
         theme: AppTheme.theme,
+        debugShowCheckedModeBanner: false,
         routes: {
           AppRoutes.splash: (context) => const SplashScreen(),
           AppRoutes.home: (context) => const HomeScreen(),

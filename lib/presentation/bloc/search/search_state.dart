@@ -16,6 +16,15 @@ final class SearchLoading extends SearchState {
   const SearchLoading();
 }
 
+final class SearchEmpty extends SearchState {
+  final List<Show> shows;
+
+  const SearchEmpty(this.shows);
+
+  @override
+  List<Object> get props => [shows];
+}
+
 final class SearchSuccess extends SearchState {
   final List<Show> shows;
 

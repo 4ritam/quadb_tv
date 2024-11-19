@@ -29,6 +29,16 @@ class HomeScreen extends StatelessWidget {
               ),
             ],
           ),
+          bottomNavigationBar: BottomNavigationBar(items: [
+            BottomNavigationBarItem(
+              icon: const Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: const Icon(Icons.search),
+              label: 'Search',
+            ),
+          ]),
           body: BlocBuilder<HomeBloc, HomeState>(
             builder: (context, state) {
               return switch (state) {

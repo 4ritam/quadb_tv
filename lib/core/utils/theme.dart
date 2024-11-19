@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppTheme {
   // Colors
-  static const Color primaryColor = Color(0xFF1E1E1E);
+  static const Color primaryColor = Color.fromARGB(255, 15, 15, 15);
   static const Color secondaryColor = Color(0xFF2C2C2C);
   static const Color accentColor = Color(0xFFE50914);
   static const Color textColor = Color(0xFFFFFFFF);

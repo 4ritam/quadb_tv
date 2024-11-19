@@ -28,13 +28,13 @@ class ShowCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (show.imageUrl != null)
+            if (show.mediumImageUrl != null)
               ClipRRect(
                 borderRadius: BorderRadius.vertical(
                   top: Radius.circular(Sizes.defaultRadius),
                 ),
                 child: CachedNetworkImage(
-                  imageUrl: show.imageUrl!,
+                  imageUrl: show.mediumImageUrl!,
                   height: Sizes.thumbnailHeight,
                   width: double.infinity,
                   fit: BoxFit.cover,

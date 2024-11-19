@@ -17,21 +17,18 @@ final class DetailsLoading extends DetailsState {
 
 final class DetailsSuccess extends DetailsState {
   final Show show;
-  final List<Season>? seasons;
-  final List<Episode>? episodes;
-  final Map<Season, List<Episode>>? seasonEpisodes;
   final List<Cast> cast;
+
+  final List<Season> seasons;
 
   const DetailsSuccess({
     required this.show,
-    this.seasons,
-    this.seasonEpisodes,
-    this.episodes,
+    required this.seasons,
     required this.cast,
   });
 
   @override
-  List<Object> get props => [show, cast];
+  List<Object> get props => [show];
 }
 
 final class DetailsFailure extends DetailsState {
