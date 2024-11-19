@@ -13,24 +13,29 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   final SearchShows searchShows;
   SearchBloc({required this.searchShows}) : super(SearchInitial()) {
     on<PerformNameSearch>(_onPerformSearch);
+    on<PerformEmptyLoad>(_onPerformEmptyLoad);
+  }
+
+  void _onPerformEmptyLoad(
+      PerformEmptyLoad event, Emitter<SearchState> emit) async {
+    final result = await searchShows(SearchShowsParams(
+      query: 'Dark',
+    ));
+    result.fold(
+      (failure) => emit(SearchFailure(failure)),
+      (shows) => emit(SearchEmpty(shows)),
+    );
   }
 
   void _onPerformSearch(
       PerformNameSearch event, Emitter<SearchState> emit) async {
-    if (event.query.isEmpty) {
-      emit(SearchInitial());
-    } else {
-      emit(SearchLoading());
-      final result = await searchShows(SearchShowsParams(
-        query: event.query.isEmpty ? 'Cobra Kai' : event.query,
-      ));
-      emit(result.fold((failure) => SearchFailure(failure), (shows) {
-        if (event.query.isEmpty) {
-          return SearchEmpty(shows);
-        } else {
-          return SearchSuccess(shows);
-        }
-      }));
-    }
+    emit(SearchLoading());
+    final result = await searchShows(SearchShowsParams(
+      query: event.query.trim(),
+    ));
+    result.fold(
+      (failure) => emit(SearchFailure(failure)),
+      (shows) => emit(SearchSuccess(shows)),
+    );
   }
 }

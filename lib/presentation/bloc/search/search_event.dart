@@ -16,3 +16,7 @@ class PerformNameSearch extends SearchEvent {
   @override
   List<Object> get props => [query];
 }
+
+class PerformEmptyLoad extends SearchEvent {
+  const PerformEmptyLoad();
+}

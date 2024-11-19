@@ -19,7 +19,12 @@ final class SearchLoading extends SearchState {
 final class SearchEmpty extends SearchState {
   final List<Show> shows;
 
-  const SearchEmpty(this.shows);
+  SearchEmpty(List<Show> shows)
+      : shows = shows
+            .where((element) =>
+                element.originalImageUrl != null ||
+                element.mediumImageUrl != null)
+            .toList();
 
   @override
   List<Object> get props => [shows];
