@@ -5,6 +5,10 @@ class LandingShowCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return;
+    return const SizedBox(
+      height: 200,
+      width: 150,
+      child: Placeholder(),
+    );
   }
 }
