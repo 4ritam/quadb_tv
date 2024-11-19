@@ -12,67 +12,42 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      onPopInvokedWithResult: (didPop, result) => false,
-      child: BlocProvider(
-        create: (context) =>
-            DependencyInjection.sl<HomeBloc>()..add(LoadShows()),
-        child: Scaffold(
-          appBar: AppBar(
-            title: const Text('TV Shows'),
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.search),
-                onPressed: () {
-                  Navigator.pushNamed(context, AppRoutes.search);
-                },
-              ),
-            ],
-          ),
-          bottomNavigationBar: BottomNavigationBar(items: [
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.search),
-              label: 'Search',
-            ),
-          ]),
-          body: BlocBuilder<HomeBloc, HomeState>(
-            builder: (context, state) {
-              return switch (state) {
-                HomeInitial() => const Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                HomeLoading() => const Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                HomeSuccess(shows: final shows) => ListView.builder(
-                    itemCount: shows.length,
-                    itemBuilder: (context, index) {
-                      final show = shows[index];
-                      return ShowCard(
-                        show: show,
-                        onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            AppRoutes.details,
-                            arguments: show,
-                          );
-                        },
-                      );
-                    },
-                  ),
-                HomeFailure(failure: final failure) => ErrorView(
-                    message: failure.message,
-                    onRetry: () {
-                      context.read<HomeBloc>().add(LoadShows());
-                    },
-                  ),
-              };
-            },
-          ),
+    return BlocProvider(
+      create: (context) => DependencyInjection.sl<HomeBloc>()..add(LoadShows()),
+      child: Scaffold(
+        body: BlocBuilder<HomeBloc, HomeState>(
+          builder: (context, state) {
+            return switch (state) {
+              HomeInitial() => const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              HomeLoading() => const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              HomeSuccess(shows: final shows) => ListView.builder(
+                  itemCount: shows.length,
+                  itemBuilder: (context, index) {
+                    final show = shows[index];
+                    return ShowCard(
+                      show: show,
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          AppRoutes.details,
+                          arguments: show,
+                        );
+                      },
+                    );
+                  },
+                ),
+              HomeFailure(failure: final failure) => ErrorView(
+                  message: failure.message,
+                  onRetry: () {
+                    context.read<HomeBloc>().add(LoadShows());
+                  },
+                ),
+            };
+          },
         ),
       ),
     );

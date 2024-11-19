@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:quadb_tv/presentation/screens/dashboard_screen.dart';
 
 import 'core/utils/routes.dart';
 import 'core/utils/theme.dart';
 import 'domain/entities/show.dart';
 import 'injection_container.dart';
 import 'presentation/screens/details_screen.dart';
-import 'presentation/screens/home_screen.dart';
-import 'presentation/screens/search_screen.dart';
 import 'presentation/screens/splash_screen.dart';
 
 void main() async {
@@ -34,8 +33,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         routes: {
           AppRoutes.splash: (context) => const SplashScreen(),
-          AppRoutes.home: (context) => const HomeScreen(),
-          AppRoutes.search: (context) => const SearchScreen(),
+          AppRoutes.home: (context) => DashboardScreen(),
         },
         onGenerateRoute: (settings) {
           if (settings.name == AppRoutes.details) {
